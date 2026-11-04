@@ -228,17 +228,24 @@ private fun MyTubeTopBar() {
     )
 }
 
+/*
+ * UPDATED:
+ * YouTube pages now open inside YouTubeWebActivity.
+ * YouTubeWebActivity.kt must exist in this package.
+ */
 private fun openWeb(
     context: Context,
     url: String
 ) {
     runCatching {
-        context.startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(url)
-            )
-        )
+        val intent = Intent(
+            context,
+            YouTubeWebActivity::class.java
+        ).putExtra("url", url)
+
+        context.startActivity(intent)
+    }.onFailure {
+        it.printStackTrace()
     }
 }
 
